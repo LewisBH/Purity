@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angel Game.CSharp", "Angel Game.CSharp.csproj", "{E5EFA1E6-26C7-C124-A4F2-0A7C3E767300}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angel Game.CSharp.Editor", "Angel Game.CSharp.Editor.csproj", "{92B23A7E-037F-0992-C330-F01CBFA86110}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5EFA1E6-26C7-C124-A4F2-0A7C3E767300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5EFA1E6-26C7-C124-A4F2-0A7C3E767300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5EFA1E6-26C7-C124-A4F2-0A7C3E767300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5EFA1E6-26C7-C124-A4F2-0A7C3E767300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92B23A7E-037F-0992-C330-F01CBFA86110}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92B23A7E-037F-0992-C330-F01CBFA86110}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92B23A7E-037F-0992-C330-F01CBFA86110}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92B23A7E-037F-0992-C330-F01CBFA86110}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DialogueHolder>
+  <Dialogues>
+    <Conversation id="0">
+      <InitialImages imageA="0" imageB="1">FubukiHappy and YuiHappy</InitialImages>
+      <Dialogue id="0" name="Fubuki">
+        <image imageIndex="0">FubukiHappy</image>
+        <Speach>this is the first line in the first line of speach</Speach>
+      </Dialogue>
+      <Dialogue id="1" name="Yui">
+        <image imageIndex="1">YuiHappy</image>
+        <Speach>this is the second character talking in the first conversation now</Speach>
+      </Dialogue>
+    </Conversation>
+    <Conversation id="1">
+      <InitialImages imageA="2" imageB="3">Lucy happy and sad</InitialImages>
+      <Dialogue id="0" name="Lucy">
+        <image imageIndex="2">LucyHappy</image>
+        <Speach>this is the first line in the first line of speach</Speach>
+      </Dialogue>
+      <Dialogue id="1" name="Lucy">
+        <image imageIndex="3">LucySad</image>
+        <Speach>this is the second character talking now</Speach>
+      </Dialogue>
+    </Conversation>
+  </Dialogues>  
+</DialogueHolder>
