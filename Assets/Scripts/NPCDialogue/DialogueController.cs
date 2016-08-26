@@ -47,11 +47,19 @@ public class DialogueController : MonoBehaviour {
         {
             if(linesOfDialogueLeft != 0)
             {
-                dialogueIndex++;
-                print("dialogue index = " + dialogueIndex);
-                linesOfDialogueLeft--;
-                print("lines of dialogue left = " + linesOfDialogueLeft);
                 print(dialogue[dialogueIndex].speach);
+
+                //print("Dialogue index = " + dialogueIndex);
+                //print("lines of dialogue left = " + linesOfDialogueLeft);
+
+                print(dialogue[dialogueIndex].image.slotIndex);
+                print(dialogue[dialogueIndex].image.imageIndex);
+
+                ImageController.Instance.ChangeImage(dialogue[dialogueIndex].image.slotIndex,
+                    characterSpriteList.spriteList[dialogue[dialogueIndex].image.imageIndex]);
+
+                dialogueIndex++;
+                linesOfDialogueLeft--;
             }
             else
             {
@@ -76,13 +84,13 @@ public class DialogueController : MonoBehaviour {
                 characterSpriteList.spriteList[conversations[conversationID].initialImages.imageA],
                 characterSpriteList.spriteList[conversations[conversationID].initialImages.imageB]);
 
-            print(dialogue[0].speach);
-            linesOfDialogueLeft--;
+            //print(dialogue[0].speach);
+            //linesOfDialogueLeft--;
         }
     }
 
     /// <summary>
-    /// TO DO: add to the xml document to allow character sprite change per each new line of dialogue.
+    /// TO DO:
     /// create somthing in the xml document to select which sprite slot needs to be changed.
     /// then on evey new line of dialogue check if the image has changed, if so, change it to the new one. 
     /// </summary>
@@ -92,6 +100,7 @@ public class DialogueController : MonoBehaviour {
         curInDialogue = false;
         playerInput.paused = false;
         blurScreen.SetActive(false);
+        dialogueIndex = 0;
         ImageController.Instance.UnShowImages();
     }
 }

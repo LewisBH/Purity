@@ -49,5 +49,8 @@ public class CharacterImage
     [XmlAttribute("imageIndex")]
     public int imageIndex;
 
+    [XmlAttribute("slotIndex")]
+    public int slotIndex;
+
     public string image;
 }

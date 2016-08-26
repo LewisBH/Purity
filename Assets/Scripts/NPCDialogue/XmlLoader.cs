@@ -18,7 +18,7 @@ public class XmlLoader : MonoBehaviour {
     {
         dialogueController = GetComponent<DialogueController>();
 
-        StartCoroutine(LoadDialogue(Path.Combine(Application.dataPath, "NPCTest1.xml")));
+        StartCoroutine(LoadDialogue(Path.Combine(Application.dataPath + "/Scripts/NPCDialogue/Dialogue/", "NPCTest1.xml")));
 
        //Debug.Log(conversations[1].id);
         //Debug.Log(conversations[1].dialogue[0].id);
