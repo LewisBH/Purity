@@ -26,6 +26,18 @@ public class ImageController : MonoBehaviour {
         rightCharacterSlot.enabled = false;
     }
 
+    public void ChangeImage(int slot, Sprite image)
+    {
+        if(slot == 1)
+        {
+            leftCharacterSlot.sprite = image;
+        }
+        else
+        {
+            rightCharacterSlot.sprite = image;
+        }
+    }
+
     public void ShowImages(Sprite leftImage, Sprite rightImage)
     {
         leftCharacterSlot.enabled = true;
