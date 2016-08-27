@@ -2,13 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
 
 public class DialogueController : MonoBehaviour {
 
     public static DialogueController Instance;
     public GameObject blurScreen;
 
-    public Text textBox;
+    [SerializeField]
+    private GameObject textBox;
+    [SerializeField]
+    public Text text;
+
+    private bool isTyping = false;
+    private bool cancelTyping = false;
+
+    [SerializeField]
+    private float textScrollSpeed;
 
     private PlayerInput playerInput;
 
@@ -48,27 +58,26 @@ public class DialogueController : MonoBehaviour {
 	
         if(curInDialogue && playerInput.CheckAttack())
         {
-            if(linesOfDialogueLeft != 0)
+            if(!isTyping)
             {
-                print(dialogue[dialogueIndex].speach);
+                if(dialogueIndex > linesOfDialogueLeft)
+                {
+                    EndDialogue();
+                }
+                else
+                {
+                    ImageController.Instance.ChangeImage(dialogue[dialogueIndex].image.slotIndex,
+                        characterSpriteList.spriteList[dialogue[dialogueIndex].image.imageIndex]);
 
-                //print("Dialogue index = " + dialogueIndex);
-                //print("lines of dialogue left = " + linesOfDialogueLeft);
-
-                textBox.text = dialogue[dialogueIndex].speach;
-
-                print(dialogue[dialogueIndex].image.slotIndex);
-                print(dialogue[dialogueIndex].image.imageIndex);
-
-                ImageController.Instance.ChangeImage(dialogue[dialogueIndex].image.slotIndex,
-                    characterSpriteList.spriteList[dialogue[dialogueIndex].image.imageIndex]);
-
+                    StartCoroutine(TextScroll(dialogue[dialogueIndex].speach));
+                }
                 dialogueIndex++;
                 linesOfDialogueLeft--;
             }
-            else
+
+            else if(isTyping && !cancelTyping)
             {
-                EndDialogue();
+                cancelTyping = true;
             }
         }
 
@@ -78,6 +87,7 @@ public class DialogueController : MonoBehaviour {
     {
         if(!curInDialogue)
         {
+            textBox.SetActive(true);
             dialogue = conversations[conversationID].dialogue;
             playerInput.paused = true;
             curInDialogue = true;
@@ -94,9 +104,29 @@ public class DialogueController : MonoBehaviour {
         }
     }
 
+    private IEnumerator TextScroll(string lineOfText)
+    {
+        int letter = 0;
+        text.text = "";
+        isTyping = true;
+        cancelTyping = false;
+
+        while(isTyping && !cancelTyping && (letter < lineOfText.Length - 1))
+        {
+            text.text += lineOfText[letter];
+            letter++;
+            yield return new WaitForSeconds(textScrollSpeed);
+        }
+        text.text = lineOfText;
+        isTyping = false;
+        cancelTyping = false;
+
+    }
+
     void EndDialogue()
     {
-        textBox.text = "";
+        textBox.SetActive(false);
+        text.text = "";
         curInDialogue = false;
         playerInput.paused = false;
         blurScreen.SetActive(false);
