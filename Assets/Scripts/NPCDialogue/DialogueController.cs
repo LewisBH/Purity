@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DialogueController : MonoBehaviour {
 
     public static DialogueController Instance;
     public GameObject blurScreen;
 
-    public bool curInDialogue;
+    public Text textBox;
 
     private PlayerInput playerInput;
+
+    public bool curInDialogue;
 
     CharacterSpriteList characterSpriteList;
     float fadeSpeed;
@@ -17,7 +20,7 @@ public class DialogueController : MonoBehaviour {
     public List<Conversation> conversations;// this is all of the dialogue
 
     List<Dialogue> dialogue;// this is the current dialogue in use
-
+    
     int dialogueIndex = 0;
     int linesOfDialogueLeft = 0;
 
@@ -51,6 +54,8 @@ public class DialogueController : MonoBehaviour {
 
                 //print("Dialogue index = " + dialogueIndex);
                 //print("lines of dialogue left = " + linesOfDialogueLeft);
+
+                textBox.text = dialogue[dialogueIndex].speach;
 
                 print(dialogue[dialogueIndex].image.slotIndex);
                 print(dialogue[dialogueIndex].image.imageIndex);
@@ -89,14 +94,9 @@ public class DialogueController : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// TO DO:
-    /// create somthing in the xml document to select which sprite slot needs to be changed.
-    /// then on evey new line of dialogue check if the image has changed, if so, change it to the new one. 
-    /// </summary>
-
     void EndDialogue()
     {
+        textBox.text = "";
         curInDialogue = false;
         playerInput.paused = false;
         blurScreen.SetActive(false);
