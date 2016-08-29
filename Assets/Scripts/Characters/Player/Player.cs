@@ -26,6 +26,11 @@ public class Player : MonoBehaviour {
     public GameObject sword;
     public GameObject rodOfLight;
 
+    private int faceDir;
+    private string direction = "right";
+
+    private Transform graphics;
+
     float accelerationTimeAirborne = 0.2f;
     float accelerationTimerGrounded = 0.1f;
     float moveSpeed = 6;
@@ -61,6 +66,10 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        Debug.LogError("The player animations aren't playing, but the attacking still works. look at the animations when you get the new animations");
+
+        graphics = GetComponentInChildren<MeshRenderer>().transform;
         weaponSwitchScript = GetComponentInChildren<WeaponSwitch>();
         controller = GetComponent<PlayerController>();
 
@@ -69,7 +78,7 @@ public class Player : MonoBehaviour {
         minJumpHeight = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 
-        dagger.transform.parent = transform;
+        dagger.transform.parent = graphics.transform;
         dagger.transform.position = weaponSlot.transform.position;
 	}
 
@@ -122,9 +131,36 @@ public class Player : MonoBehaviour {
 
         controller.Move(velocity * Time.deltaTime, directionalInput);
 
+        faceDir = (int)Mathf.Sign(velocity.x);
+
+        Vector3 newDirection = graphics.localScale;
+        newDirection.x = faceDir;
+        graphics.localScale = newDirection;
+        weaponSlot.localScale = newDirection;
+
+        if(faceDir == -1 && direction == "right")
+        {
+            Vector3 tempScale = weaponSlot.localScale;
+            tempScale.x *= faceDir;
+            weaponSlot.localScale = tempScale;
+            direction = "left";
+        }
+        else if (faceDir == 1 && direction == "left")
+        {
+            Vector3 tempScale = weaponSlot.localScale;
+            tempScale.x *= faceDir;
+            weaponSlot.localScale = tempScale;
+            direction = "right";
+        }
+
         if (controller.collisions.above || controller.collisions.below)
         {
             velocity.y = 0;
+        }
+
+        if(velocity.x > 0)
+        {
+
         }
 
         if(Input.GetButtonUp("Save"))
