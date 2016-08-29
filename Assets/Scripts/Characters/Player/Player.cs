@@ -49,6 +49,9 @@ public class Player : MonoBehaviour {
         {
             DontDestroyOnLoad(gameObject);
             Instance = this;
+
+            HP.Initilise();
+            SP.Initilise();
         }
         else
         {
