@@ -8,6 +8,15 @@ public class Attack : MonoBehaviour {
     [SerializeField]
     private int maxAttackSequence;
 
+    private PlayerController controller;
+
+    public enum AttackType
+    {
+        Normal,
+        Airborne,
+        Secondary
+    }
+
     public Weapon curWeapon;
     private Animation animator;
     private AnimationClip attackAnimation;
@@ -18,11 +27,14 @@ public class Attack : MonoBehaviour {
     private float timeToAttackAgain;
     private float timeToSecondaryAttack;
 
+    private bool airborneAttacked;
+
     public bool secondaryAttack;
 
 	// Use this for initialization
 	void Start () {
         animator = GetComponent<Animation>();
+        controller = GetComponent<PlayerController>();
 	}
 
     public void Initialise()
@@ -44,7 +56,7 @@ public class Attack : MonoBehaviour {
                 reduceAttackTimer = false;
 
                 timeToAttackAgain = AttackTime() + 0.3f;// this sets the timer to how ever long the current attack animation is + 0.3 seconds.
-                //Debug.Log(timeToAttackAgain);
+
                 ResetAttack();
             }
         }
@@ -62,19 +74,34 @@ public class Attack : MonoBehaviour {
                 secondaryAttack = false;
             }
         }
+
+        if(controller.collisions.below)
+        {
+            airborneAttacked = false;
+        }
     }
+
+    public void AirborneAttack()
+    {
+        if(!airborneAttacked)
+        {
+            DoAttack(AttackType.Airborne);
+            airborneAttacked = true;
+        }
+    }
+
     public void RegularAttack()
     {
         if (!reduceAttackTimer)// if you havent attacked in the current combo, start a new one.
         {
             reduceAttackTimer = true;
 
-            DoAttack(false);
+            DoAttack(AttackType.Normal);
         }
         else if (timeToAttackAgain < AttackTime() - (AttackTime() - 0.3f) || timeToAttackAgain > -1f && timeToAttackAgain < 0)// this checks to see if the timer is withing 0.3 seconds of the end of the current animation
         {
             timeToAttackAgain = AttackTime() + 0.3f;
-            DoAttack(false);
+            DoAttack(AttackType.Normal);
         }
     }
 
@@ -84,11 +111,11 @@ public class Attack : MonoBehaviour {
         {
             reduceSecondaryAttackTimer = true;
 
-            DoAttack(true);
+            DoAttack(AttackType.Secondary);
         }
     }
 
-    public void DoAttack(bool secondaryAttack)
+    public void DoAttack(AttackType attackType)
     {
         if(!secondaryAttack)
         {
