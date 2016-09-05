@@ -67,7 +67,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        Debug.LogError("The player animations aren't playing, but the attacking still works. look at the animations when you get the new animations");
+        Debug.LogError("The player animations aren't playing, but the attacking still works. look at the old animations when you get the new animations");
 
         graphics = GetComponentInChildren<MeshRenderer>().transform;
         weaponSwitchScript = GetComponentInChildren<WeaponSwitch>();
@@ -161,26 +161,6 @@ public class Player : MonoBehaviour {
         if(velocity.x > 0)
         {
 
-        }
-
-        if(Input.GetButtonUp("Save"))
-        {
-            Scene scene = SceneManager.GetActiveScene();
-            PlayerState.Instance.localPlayerData.SceneID = scene.buildIndex;
-            PlayerState.Instance.localPlayerData.PosX = transform.position.x;
-            PlayerState.Instance.localPlayerData.PosY = transform.position.y;
-
-            SaveLists.Instance.SaveData();
-        }
-
-        if(Input.GetButtonUp("Load"))
-        {
-            SaveLists.Instance.LoadData();
-            GameControl.Instance.isSceneBeingLoaded = true;
-
-            int whichScene = SaveLists.Instance.localCopyOfData.SceneID;
-
-            SceneManager.LoadScene(whichScene);
         }
     }
 }

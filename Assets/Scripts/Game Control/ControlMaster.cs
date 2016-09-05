@@ -26,11 +26,6 @@ public class ControlMaster : MonoBehaviour {
             Destroy(gameObject);
         }
     }
-
-    void Start()
-    {
-
-    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -61,16 +56,6 @@ public class ControlMaster : MonoBehaviour {
         float keyboardJump = Input.GetAxisRaw("Keyboard Jump");
         float keyboardWeaponSwitch = Input.GetAxisRaw("Keyboard Weapon Switch");
         float keyboardAttack = Input.GetAxisRaw("Keyboard Attack");
-
-        if(keyboardJump == 1)
-        {
-            //Debug.Log("keyboard jump button pressed");
-        }
-
-        if(controllerJump == 1)
-        {
-            //Debug.Log("controller Jump button pressed");
-        }
 
         if (controllerType == ControllerType.Controller)
         {

@@ -7,6 +7,9 @@ public class GameControl : MonoBehaviour {
     public static GameControl Instance;
     public static GameObject StartMenu;
     public static GameObject SelectMenu;
+
+    private bool inStartMenu;
+    private bool inSelectMenu;
    
     public Scene activeScene;
 
@@ -38,7 +41,7 @@ public class GameControl : MonoBehaviour {
     {
         if (Instance == null)//checks to see if there is a game control object and if there isnt one, make this that game object
         {
-            DontDestroyOnLoad(gameObject);//stop this game object from being deleted between scenes
+            //DontDestroyOnLoad(gameObject);//stop this game object from being deleted between scenes
             Instance = this;//makes this game object the game control object in use
             activeScene = SceneManager.GetActiveScene();
             //Debug.Log(activeScene.name);
@@ -53,8 +56,6 @@ public class GameControl : MonoBehaviour {
     {
         pauseMenu = CameraFollow.Instance.GetComponentInChildren<PauseMenu>(true).gameObject;
         selectMenu = CameraFollow.Instance.GetComponentInChildren<SelectMenu>(true).gameObject;
-        startDefaultButton = CameraFollow.Instance.GetComponentInChildren<DefaultStartButton>(true).gameObject;
-        selectDefaultButton = CameraFollow.Instance.GetComponentInChildren<DefaultSelectButton>(true).gameObject;
 
         upgradeScripts = upgradeParent.GetComponentsInChildren<Upgrade>();
 
@@ -71,42 +72,58 @@ public class GameControl : MonoBehaviour {
         bool start = Input.GetKeyDown(KeyCode.Joystick1Button7);
         bool select = Input.GetKeyDown(KeyCode.Joystick1Button6);
 
-        if(start)
+        if(start && !inSelectMenu)
         {
-            if(isPaused)
-            {
-                Time.timeScale = 1;
-                pauseMenu.SetActive(false);
-                selectMenu.SetActive(false);
-                isPaused = false;
-                EventSystem.current.SetSelectedGameObject(startDefaultButton);
-            }
-            else if(!isPaused)
+            if(!isPaused)
             {
                 Time.timeScale = 0;
                 pauseMenu.SetActive(true);
                 isPaused = true;
+                inStartMenu = true;
+                EventSystem.current.SetSelectedGameObject(startDefaultButton);
+                
+
+            }
+            else
+            {
+                ClosePauseMenu();
             }
         }
 
-        if(select)
+        if(select && !inStartMenu)
         {
-            if(isPaused)
-            {
-                Time.timeScale = 1;
-                pauseMenu.SetActive(false);
-                selectMenu.SetActive(false);
-                isPaused = false;
-                EventSystem.current.SetSelectedGameObject(selectDefaultButton);
-            }
-            else if(!isPaused)
+            if(!isPaused)
             {
                 Time.timeScale = 0;
                 selectMenu.SetActive(true);
                 isPaused = true;
+                inSelectMenu = true;
+                EventSystem.current.SetSelectedGameObject(selectDefaultButton);
+            }
+            else
+            {
+                CloseSelectMenu();
             }
         }
         #endregion PAUSE
+    }
+
+    public void ClosePauseMenu()
+    {
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        selectMenu.SetActive(false);
+        isPaused = false;
+        inStartMenu = false;
+    }
+
+    public void CloseSelectMenu()
+    {
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        selectMenu.SetActive(false);
+        isPaused = false;
+        inSelectMenu = false;
     }
 
     public void OnLoad()
